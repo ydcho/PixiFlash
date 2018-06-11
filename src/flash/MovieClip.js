@@ -8,7 +8,8 @@
 		DisplayObject = PIXI.DisplayObject,
 		Timeline = PIXI.flash.Timeline,
 		Tween = PIXI.flash.Tween,
-		SharedTicker = PIXI.ticker.shared;
+		SharedTicker = PIXI.ticker.shared,
+		Utils = PIXI.util.Utils;
 
 	/**
 	 * The class to emulate createjs.MovieClip, requires TweenJS
@@ -671,6 +672,21 @@
 
 		this.__Container_destroy(destroyChildren);
 	};
+
+	/**
+	 * modified by vince, 20171220
+	 */
+	Object.defineProperty(p, 'compositeOperation', {
+		set: function(value) {
+			if (value == 'lighter') {
+				var _instance = this;
+				if (_instance) {
+					_instance.blendMode = PIXI.BLEND_MODES.ADD;
+					Utils.setChildBlendMode(_instance, PIXI.BLEND_MODES.ADD);
+				}
+			}
+		}
+	});
 
 	// Assign to namespace
 	PIXI.flash.MovieClip = MovieClip;
